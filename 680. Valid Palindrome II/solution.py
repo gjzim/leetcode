@@ -2,8 +2,38 @@ import random, string
 from typing import List
 
 class Solution:
+    def validPalindrome_iter(self, s: str) -> bool:
+        i, j = 0, len(s)-1
+
+        while i < j:
+            if s[i] != s[j]:
+                return s[i+1:j] == s[j:i+1:-1] or \
+                       s[i:j-1] == s[j-1:i:-1]
+
+            i, j = i+1, j-1
+                
+        return True
+
     def validPalindrome(self, s: str) -> bool:
-        return False
+        i, j = 0, len(s)-1
+
+        while i < j:
+            if s[i] != s[j]:
+                return self.isPalindrome(s, i+1, j) or \
+                    self.isPalindrome(s, i, j-1)
+
+            i, j = i+1, j-1        
+                
+        return True
+    
+    def isPalindrome(self, s, i, j):
+        while i < j:
+            if s[i] != s[j]:
+                return False
+                
+            i, j = i+1, j-1
+            
+        return True
 
     def validPalindrome_recursive(self, s: str) -> bool:
         return self.isValidPalindrome(s, 0, len(s)-1)
@@ -48,7 +78,7 @@ def generate_test(sol, s = None):
 
 sol = Solution()
 ##generate_test(sol, "aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuculmgmqfvnbgtapekouga")
-s = "eeccccbebaeeabebccceea"
+s = "cuffucu"
 print(sol.validPalindrome(s))
 print(sol.validPalindrome_recursive(s))
 ##generate_test(sol, "eeccccbebaeeabebccceea")
