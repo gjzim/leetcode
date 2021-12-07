@@ -8,9 +8,6 @@ class Solution:
 
         return b
 
-sol = Solution()
-for n in range(30):
-    print(n, sol.fib(n))
 
             
         
