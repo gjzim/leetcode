@@ -7,7 +7,7 @@ class ListNode:
         self.next = next
         
 class Solution:
-    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+    def removeElements_iter(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
         prev, cur = None, head
 
         while cur:
@@ -22,3 +22,14 @@ class Solution:
             cur = cur.next
         
         return head
+
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        if head is None: return None
+
+        if head.val == val:
+            head = self.removeElements(head.next, val)
+        else:
+            head.next = self.removeElements(head.next, val)
+        
+        return head
+
