@@ -1,7 +1,9 @@
+import random
 from typing import List
 
 class Solution:
-    def sumOddLengthSubarrays(self, arr: List[int]) -> int:
+    def sumOddLengthSubarrays_1(self, arr: List[int]) -> int:
+        # Uses sliding window technique
         total = 0
         
         for k in range(1, len(arr)+1, 2):
@@ -20,5 +22,16 @@ class Solution:
 
         return total
 
-sol = Solution()
-print(sol.sumOddLengthSubarrays([1000]))
+    def sumOddLengthSubarrays(self, arr: List[int]) -> int:
+        # Uses prefix sum array
+        n= len(arr)
+        arr = [0] + arr
+        for i in range(1, n+1):
+            arr[i] += arr[i-1]
+
+        total = arr[-1]
+        for i in range(3, n+1, 2):
+            for j in range(i, n+1):
+                total += arr[j] - arr[j-i]
+
+        return total
