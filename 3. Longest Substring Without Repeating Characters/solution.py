@@ -13,3 +13,17 @@ class Solution:
             curlen, start = curlen - 1, start + 1            
             
         return result
+
+    def lengthOfLongestSubstring_alt(self, s: str) -> int:
+        seen = {}
+        result = start = 0
+
+        for end, c in enumerate(s):
+            if c in seen and start <= seen[c]:
+                start = seen[c] + 1
+            else:
+                result = max(result, end - start + 1)
+
+            seen[c] = end
+
+        return result
