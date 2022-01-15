@@ -1,7 +1,7 @@
 import collections
 
 class Solution:
-    def characterReplacement(self, s: str, k: int) -> int:
+    def characterReplacement_slower(self, s: str, k: int) -> int:
         chars = collections.defaultdict(int)
         start, result = 0, 0
 
@@ -14,5 +14,21 @@ class Solution:
                 start += 1
                 
             result = max(result, end-start+1)
+            
+        return result
+
+    def characterReplacement(self, s: str, k: int) -> int:
+        chars = collections.defaultdict(int)
+        start = result = max_repeated = 0
+
+        for end, c in enumerate(s):
+            chars[c] += 1
+            max_repeated = max(max_repeated, chars[c])
+
+            if (end - start + 1 - max_repeated) > k:
+                chars[s[start]] -= 1
+                start += 1
+                
+            result = max(result, end - start + 1)
             
         return result
