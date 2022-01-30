@@ -6,3 +6,12 @@ class Solution:
                     return [i, j+i+1]
 
         return []
+
+    def twoSumHash(nums, target):
+        comps = {}
+        for i, val in enumerate(nums):
+            comp = target-val
+            if comp not in comps:
+                comps[val] = i
+            else:
+                return [comps[comp], i]
