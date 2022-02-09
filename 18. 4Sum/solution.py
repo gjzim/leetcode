@@ -1,7 +1,7 @@
 from typing import List
 
 class Solution:
-    def fourSum_using_3sum(self, nums: List[int], target: int) -> List[List[int]]:
+    def fourSum_iter(self, nums: List[int], target: int) -> List[List[int]]:
         nums.sort()
         n, res = len(nums), []
 
@@ -29,3 +29,33 @@ class Solution:
                         c += 1
 
         return res
+
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def findNSum(l, r, n, nums, target, result, results):
+            if (r - l + 1) < n or n < 2 or target < nums[l] * n or target > nums[r] * n:
+                return
+
+            if n == 2:
+                while l < r:
+                    cur = nums[l] + nums[r]
+                    if cur == target:
+                        results.append(result + [nums[l], nums[r]])
+                        l, r = l + 1, r - 1
+                        
+                        while l < r and nums[l] == nums[l - 1]: l += 1
+                        while l < r and nums[r] == nums[r + 1]: r -= 1
+                    elif cur > target:
+                        r -= 1
+                    else:
+                        l += 1
+            else:
+                for i in range(l, r + 1):
+                    if i == l or (i > l and nums[i] != nums[i - 1]):
+                        findNSum(i + 1, r, n - 1, nums, target - nums[i], result + [nums[i]], results)
+
+        
+        nums.sort()
+        results = []
+        findNSum(0, len(nums) - 1, 4, nums, target, [], results)
+
+        return results
