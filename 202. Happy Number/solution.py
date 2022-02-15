@@ -1,7 +1,7 @@
 from typing import List
 
 class Solution:
-    def isHappy(self, n: int) -> bool:
+    def isHappy_set(self, n: int) -> bool:
         seen = {}
 
         while n not in seen:
@@ -16,5 +16,22 @@ class Solution:
 
         return n == 1
 
-sol = Solution()
-print(sol.isHappy(19))
+    def isHappy(self, n: int) -> bool:
+        slow = fast = n
+
+        while fast != 1 and self.digits_squared(fast) != 1:
+            slow = self.digits_squared(slow)
+            fast = self.digits_squared(self.digits_squared(fast))
+
+            if slow == fast:
+                return False
+
+        return True
+    
+    def digits_squared(self, num):
+        result = 0
+        while num:
+            result += (num % 10) * (num % 10)
+            num //= 10
+
+        return result
