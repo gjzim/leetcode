@@ -1,7 +1,7 @@
 from typing import List
 
 class Solution:
-    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+    def intervalIntersection_old(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
         result = []
         i = j = 0
         
@@ -18,5 +18,27 @@ class Solution:
 
                 if first[1] < second[1]: i += 1
                 else: j += 1
+
+        return result
+
+    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        result = []
+        i = j = 0
+        
+        while i < len(firstList) and j < len(secondList):
+            first, second = firstList[i], secondList[j]
+
+            if ( first[0] >= second[0] and first[0] <= second[1] ) or \
+               ( second[0] >= first[0] and second[0] <= first[1] ):
+                result.append([
+                    max(first[0], second[0]), 
+                    min(first[1], second[1])
+                ])
+            
+
+            if first[1] < second[1]:
+                i += 1
+            else:
+                j += 1
 
         return result
