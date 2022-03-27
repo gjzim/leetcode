@@ -25,6 +25,22 @@ class Solution:
 
         return head
     
+    def removeNthFromEnd_sentinel(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        slow = fast = head
+        sentinel = ListNode(0, head)
+        prev = sentinel
+
+        while fast:
+            fast = fast.next
+            if n <= 0:
+                prev = slow
+                slow = slow.next
+            n -= 1
+        
+        prev.next = slow.next
+        
+        return sentinel.next
+    
     def removeNthFromEnd_clean(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         slow = fast = head
 
